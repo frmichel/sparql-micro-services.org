@@ -1,0 +1,18 @@
+{
+  "@context": {
+    "@vocab": "http://ns.inria.fr/sparql-micro-service/api#",
+    
+    "variantNames": null,
+    
+    "Allele": null,
+    "Gene_Name": null,
+    "Transcript_BioType": null,
+    "Rank": null,
+    "HGVS.c": null,
+    "HGVS.p": null,
+    "cDNA.pos / cDNA.length": null,
+    "CDS.pos / CDS.length": null,
+    "AA.pos / AA.length": null
+  }
+}
+

@@ -1,0 +1,41 @@
+# https://data.eppo.int/api/rest/1.0/taxon/SOLTU/pests?authtoken=f09732fd7fad725157edd884c825e46a"
+{
+  "Artificial": [
+    {
+      "eppocode": "APLV00",
+      "idclass": 8,
+      "labelclass": "Artificial",
+      "fullname": "Andean potato latent virus (as Solanaceae)"
+    },
+    {
+      "eppocode": "APMOV0",
+      "idclass": 8,
+      "labelclass": "Artificial",
+      "fullname": "Andean potato mottle virus (as Solanaceae)"
+    },
+    {
+      "eppocode": "APMOV0",
+      "idclass": 8,
+      "labelclass": "Artificial",
+      "fullname": "Andean potato mottle virus (as Solanum)"
+    },
+    {
+      "eppocode": "AVBO00",
+      "idclass": 8,
+      "labelclass": "Artificial",
+      "fullname": "Arracacha virus B oca strain (as Solanaceae)"
+    },
+    {
+      "eppocode": "CLVD00",
+      "idclass": 8,
+      "labelclass": "Artificial",
+      "fullname": "Columnea latent viroid"
+    },
+    {
+      "eppocode": "PRMV00",
+      "idclass": 8,
+      "labelclass": "Artificial",
+      "fullname": "Peach rosette mosaic virus (as Solanaceae)"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+@prefix ggwd:   <http://gigwa.fr/data/>
+@prefix obo:    <http://purl.obolibrary.org/obo/>
+@prefix sio:    <http://semanticscience.org/resource/>
+
+# GENO: https://www.ebi.ac.uk/ols/ontologies/geno
+# Revolve obo:GENO_* terms: 
+#    https://www.ebi.ac.uk/ols/ontologies/geno/properties?iri=http://purl.obolibrary.org/obo/GENO_0000610
+
+CONSTRUCT {
+
+    ?variantUri 
+        a                       sio:SIO_001381; # genomic sequence variant
+        a                       ?typeUri;
+
+        # sequence start position
+        sio:SIO_000791          ?start;
+        
+        # sequence end position
+        sio:SIO_000792          ?end;
+
+        # is_variant_allele_of
+        obo:GENO_0000641        ?referenceUri;
+
+        # is_reference_allele_of
+        obo:GENO_0000610        ?alternateUri;
+        
+        # is located in
+        sio:SIO_000061          ?chromUri.
+
+    ?chromUri 
+        a                       obo:SO_0000340;     # chromosome
+        # has value
+        sio:SIO_000300          ?referenceName.
+
+    ?referenceUri 
+        a                       obo:GENO_0000036;   # reference allele
+        # has value
+        sio:SIO_000300          ?referenceBases.
+
+    ?alternateUri 
+        a                       obo:GENO_0000002;   # variant allele
+        # has value
+        sio:SIO_000300          ?alternativeBases.
+
+} WHERE {
+
+    ?data
+        api:variantDbId         ?id;
+        api:start               ?start;
+        api:end                 ?end;
+        api:variantType         ?type;
+        api:referenceBases      ?referenceBases;
+        api:alternate_bases     ?alternateBases;
+        api:referenceName       ?referenceName;
+		.
+ 
+    bind (IRI(concat("ggwd:variant/", ?id)) AS ?variantUri)
+
+    bind (IRI(concat("ggwd:chromosome/", ?referenceName)) AS ?chromUri)
+
+    bind (IRI(concat("ggwd:allele/", ?referenceBases)) AS ?referenceUri)
+
+    bind (IRI(concat("ggwd:allele/", ?alternateBases)) AS ?alternateUri)
+
+    bind (IRI(
+		IF(?type == "SNP", "obo:SO_0000694",
+          IF(?type == "indel", "obo:SO_1000032",
+            IF(?type == "structural_alteration", "obo:SO_0001785",
+              IF(?type == "copy_number_variation", "obo:SO_0001019", 
+                concat("ggwd:variant/type/", ?type))
+            )
+          )
+        )
+    ) AS ?typeUri)
+}
+

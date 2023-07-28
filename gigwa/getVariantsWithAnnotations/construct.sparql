@@ -1,0 +1,109 @@
+@prefix dc:     <http://purl.orf/dc/elements/1.1/>
+@prefix ggwd:   <http://gigwa.fr/data/>
+@prefix ggw:    <http://gigwa.fr/voc/>
+@prefix oa:     <http://www.w3.org/ns/oa#>
+@prefix obo:    <http://purl.obolibrary.org/obo/>
+@prefix sio:    <http://semanticscience.org/resource/>
+@prefix so:     <http://purl.obolibrary.org/obo/>
+
+# GENO: https://www.ebi.ac.uk/ols/ontologies/geno
+# Revolve obo:GENO_* terms: 
+#    https://www.ebi.ac.uk/ols/ontologies/geno/properties?iri=http://purl.obolibrary.org/obo/GENO_0000610
+
+CONSTRUCT {
+
+    ?variantUri 
+        a                       sio:SIO_001381; # genomic sequence variant
+        a                       ?typeUri;
+        
+        # sequence start position
+        sio:SIO_000791          ?start;
+        
+        # sequence end position
+        sio:SIO_000792          ?end;
+
+        # is_variant_allele_of
+        obo:GENO_0000641        ?referenceUri;
+
+        # is_reference_allele_of
+        obo:GENO_0000610        ?alternateUri;
+        
+        # is located in
+        sio:SIO_000061          ?chromUri.
+
+
+    ?annotationUri 
+        a                       ggw:VariantAnnotation;
+        ggw:hasEffect           ?annotationEffectUri;
+        ggw:hasFeatureType      ?annotationFeatureTypeUri;
+        ggw:hasImpact           ?annotationImpactUri;
+        oa:hasBody              ?variantUri;
+        oa:hasTarget            ?geneUri.
+
+    ?geneUri 
+        a                       so:SO_0000704;      # gene
+        dc:identifier           ?geneName.
+
+    ?chromUri 
+        a                       obo:SO_0000340;     # chromosome
+        # has value
+        sio:SIO_000300          ?referenceName.
+
+    ?referenceUri 
+        a                       obo:GENO_0000036;   # reference allele
+        # has value
+        sio:SIO_000300          ?referenceBases.
+
+    ?alternateUri 
+        a                       obo:GENO_0000002;   # variant allele
+        # has value
+        sio:SIO_000300          ?alternativeBases.
+
+} WHERE {
+
+    ?data
+        api:variantDbId         ?id;
+        api:start               ?start;
+        api:end                 ?end;
+        api:variantType         ?type;
+        api:referenceBases      ?referenceBases;
+        api:alternate_bases     ?alternateBases;
+        api:referenceName       ?referenceName;
+        
+        api:additionalInfo [
+            api:transcriptEffects [ 
+                api:Annotation ?annotationEffect; 
+                api:Annotation_Impact ?annotationImpact; 
+                api:Feature_Type ?annotationFeatureType; 
+                api:Gene_ID ?geneId;
+            ]
+        ].
+
+    bind (IRI(concat("ggwd:variant/", ?id)) AS ?variantUri)
+
+    bind (IRI(concat("ggwd:chromosome/", ?referenceName)) AS ?chromUri)
+
+    bind (IRI(concat("ggwd:allele/", ?referenceBases)) AS ?referenceUri)
+
+    bind (IRI(concat("ggwd:allele/", ?alternateBases)) AS ?alternateUri)
+
+
+    bind (IRI(concat("ggwd:annotation/effect/", ?annotationEffect)) AS ?annotationEffectUri)
+    bind (IRI(concat("ggwd:annotation/", SHA1(concat(?annotationEffect, "_", ?id, "_", ?geneId)))) AS ?annotationUri)
+    bind (IRI(concat("ggwd:annotation/featureType/", ?annotationFeatureType)) AS ?annotationFeatureTypeUri)
+    bind (IRI(concat("ggwd:annotation/impact/", ?annotationImpact)) AS ?annotationImpactUri)
+
+    bind (IRI(concat("ggwd:gene/", ?geneId)) AS ?geneUri)
+
+    bind (IRI(
+		IF(?type == "SNP", "so:SO_0000694",
+          IF(?type == "indel", "so:SO_1000032",
+            IF(?type == "structural_alteration", "so:SO_0001785",
+              IF(?type == "copy_number_variation", "so:SO_0001019",
+                concat("ggwd:variant/type/", ?type))
+            )
+          )
+        )
+    ) AS ?typeUri)
+}
+

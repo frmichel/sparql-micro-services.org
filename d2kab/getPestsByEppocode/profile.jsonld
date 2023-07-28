@@ -1,0 +1,9 @@
+{
+  "@context": {
+    "@base": "http://ns.inria.fr/sparql-micro-service/item/",
+    "@vocab": "http://ns.inria.fr/sparql-micro-service/api#",
+    
+    "Major host": "Major_host",
+    "Wild/Weed": "Wild_Weed"
+  }
+}

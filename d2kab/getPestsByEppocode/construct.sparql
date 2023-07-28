@@ -1,0 +1,14 @@
+CONSTRUCT {
+    [] 
+        api:eppocode ?eppocode;
+        api:idclass ?idclass;
+        api:labelclass ?labelclass;
+        api:fullname ?fullname.
+}
+WHERE {
+    []
+        api:eppocode ?eppocode;
+        api:idclass ?idclass;
+        api:labelclass ?labelclass;
+        api:fullname ?fullname.
+}
