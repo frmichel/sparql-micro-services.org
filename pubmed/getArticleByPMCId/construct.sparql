@@ -14,7 +14,7 @@ CONSTRUCT {
         a schema:ScholarlyArticle, bibo:AcademicArticle, fabio:ResearchPaper ;
         dct:title                   ?title;
         dct:creator                 ?indivAuthorName;
-        schema:authorList           ?firstAuthor;
+        bibo:authorList             ?firstAuthor;
         dct:source                  ?journal;
         fabio:journal               ?journal;
         dct:issued                  ?issueDate;
