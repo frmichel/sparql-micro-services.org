@@ -25,7 +25,7 @@
     schema:name "Retrieve artibles from PubMed using their PubMed ID";
     schema:description '''
         <p>This service retrieves articles from <a href="https://www.ncbi.nlm.nih.gov/" target="_new">PubMed</a> using <a href="https://www.ncbi.nlm.nih.gov/books/NBK25501/" target="_new">NCBI Entrez APIs</a>, and generates an RDF representation thereof. 
-        Article are identified by their PubMed identifier (PMID) provided using property <code>bibo:pmid</code>.</p>
+        The articles are identified by their PubMed identifier (PMID) provided using property <code>bibo:pmid</code>.</p>
         <p>The graph produced relies mainly on the <a href="https://github.com/structureddynamics/Bibliographic-Ontology-BIBO" target="_new">Bibiographic Ontology</a> (BIBO) and <a href="https://sparontologies.github.io/fabio/current/fabio.html" target="_new">FRBR-aligned Bibliographic Ontology</a> (FaBiO). 
         An article IRI is preferably based on its DOI, if any, prefixed with <code>http://doi.org/</code>.
         If no DOI is available, the IRI is PubMed's web page URL prefixed with <code>https://pubmed.ncbi.nlm.nih.gov/</code>.
